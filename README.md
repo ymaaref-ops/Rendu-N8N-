@@ -10,11 +10,15 @@ Gagner du temps sur une boîte école qui reçoit des mails très différents : 
 
 ## 2. Fonctionnement étape par étape
 
-Le workflow compte 12 nœuds. Voici leur rôle, dans l'ordre.
+Vue d'ensemble du workflow complet :
+
+![Workflow complet](1-Workflow/captures/00-workflow-complet.png)
+
+Le workflow compte 13 nœuds. Voici leur rôle, dans l'ordre.
 
 **Étape 1 : déclenchement.** Le nœud « Tous les jours 8h » (Schedule Trigger) lance le workflow chaque jour à 8 h. Le nœud « test manuel » le lance à la demande, uniquement pour les tests.
 
-![Déclencheurs du workflow](captures/01-declencheurs.png)
+![Déclencheurs du workflow](1-Workflow/captures/01-declencheurs.png)
 
 **Étape 2 : récupération des mails.** Le nœud « Récupérer les mails » (Gmail, opération *Get many messages*) cherche les mails qui répondent à ce filtre :
 - `in:inbox` : seulement la boîte de réception ;
@@ -24,7 +28,7 @@ Le workflow compte 12 nœuds. Voici leur rôle, dans l'ordre.
 
 Le nœud récupère au maximum 50 mails par exécution (limite par défaut du nœud Gmail). Le libellé `Agent-traité` garantit qu'un mail n'est traité qu'une seule fois.
 
-![Récupération des mails](captures/02-recuperation-mails.png)
+![Récupération des mails](1-Workflow/captures/02-recuperation-mails.png)
 
 **Étape 3 : classification par l'IA.** Le nœud « Classer le mail » (Text Classifier) envoie à Google Gemini l'expéditeur, l'objet et les 2 000 premiers caractères du mail. Gemini choisit une seule catégorie parmi quatre :
 - **Cours & devoirs** : professeurs, plateformes de cours, rendus, notes ;
@@ -36,21 +40,19 @@ Si aucune catégorie ne convient clairement, le mail part dans la sortie de repl
 
 Les instructions, les catégories et les exemples donnés à l'IA sont en français, comme mes mails.
 
-![Classification par Gemini](captures/03-classification.png)
+![Classification par Gemini](1-Workflow/captures/03-classification.png)
 
 **Étape 4 : application des libellés.** Chaque sortie du classifieur mène à un nœud Gmail « Libellé … » (Cours, Admin, Vie étudiante, Newsletters, À vérifier). Ce nœud ajoute deux libellés au mail : sa catégorie et le libellé technique `Agent-traité`.
 
-![Application des libellés](captures/04-libelles.png)
+![Application des libellés](1-Workflow/captures/04-libelles.png)
 
 **Étape 5 : regroupement.** Le nœud « Regrouper les mails traités » (Merge, 5 entrées) réunit les cinq branches en un seul flux.
 
 **Étape 6 : rédaction du récapitulatif.** Le nœud « Rédiger le récap » (Code JavaScript) range les mails par catégorie et construit le texte : nombre de mails triés, puis pour chaque catégorie non vide la liste des objets et des expéditeurs. Il ajoute la date du jour au sujet « Récap du jour – … ».
 
-![Rédaction du récapitulatif](captures/05-recap-code.png)
+![Rédaction du récapitulatif](1-Workflow/captures/05-recap-code.png)
 
 **Étape 7 : envoi du récapitulatif.** Le nœud « Envoyer le recap » (Gmail, *Send a message*) envoie ce texte à ma propre boîte. S'il n'y a aucun nouveau mail, aucun récapitulatif n'est envoyé.
-
-![Envoi du récapitulatif](captures/06-envoi-recap.png)
 
 ### Schéma du flux
 
