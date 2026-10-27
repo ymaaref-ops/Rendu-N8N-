@@ -71,7 +71,7 @@ const envoyer_le_recap = node({
   config: { name: 'Envoyer le recap', parameters: { sendTo: 'votre.adresse@ecole.fr', subject: expr('{{ $json.sujet }}'), emailType: 'text', message: expr('{{ $json.corps }}'), options: { appendAttribution: false } }, credentials: { gmailOAuth2: newCredential('Gmail account', 'GMAIL_CREDENTIAL_ID') }, position: [2000, -16], webhookId: '56e88b68-dae3-4b8c-8243-479a09c990b9' }
 });
 
-const wf = workflow('TqHwppmn5Sz03A5I', 'Workflow d\'automatisation de traitement de mails', { executionOrder: 'v1', binaryMode: 'separate', availableInMCP: true });
+const wf = workflow('TqHwppmn5Sz03A5I', "Workflow d'automatisation de traitement de mails", { executionOrder: 'v1', binaryMode: 'separate', availableInMCP: true, description: "Trie chaque matin à 8 h les mails récents de la boîte Gmail école, applique à chacun un libellé de catégorie et envoie un récapitulatif du tri. Aucun mail n'est supprimé ni archivé." });
 
 export default wf
   .add(sticky('Étiquetage Gmail : \n\nChaque mail reçoit le libellé de sa catégorie plus le libellé technique Agent-traité. Aucune suppression, aucun archivage.', [libell_Cours, libell_Admin, libell_Vie_tudiante, libell_Newsletters, libell_v_rifier], { name: 'Sticky Note', color: 4, width: 464, height: 880, position: [864, -400] }))
