@@ -83,7 +83,7 @@ test manuel ───────┘                              │
 ## 4. Installation
 
 1. Dans Gmail, crée les libellés `Agent-traité`, `Cours & devoirs`, `Administration`, `Vie étudiante`, `Newsletters & pubs` et `À vérifier`.
-2. Dans n8n, importe le workflow (export JSON, à déposer dans `1-Workflow/`).
+2. Le workflow est fourni au format TypeScript (`Workflow d'automatisation de traitement de mails.workflow.ts`, dans `1-Workflow/`). Il se déploie dans n8n avec l'outil `n8ncli` (`n8ncli push`).
 3. Configure les identifiants :
    - **Gmail OAuth2** : connecte ton compte Google. Les comptes d'école bloquent parfois les applications externes ; vérifie que l'accès est autorisé.
    - **Google Gemini** : ajoute une clé API Gemini dans les identifiants du nœud « N8n Server ».
