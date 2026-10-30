@@ -23,10 +23,10 @@ Le workflow compte 13 nœuds. Voici leur rôle, dans l'ordre.
 **Étape 2 : récupération des mails.** Le nœud « Récupérer les mails » (Gmail, opération *Get many messages*) cherche les mails qui répondent à ce filtre :
 - `in:inbox` : seulement la boîte de réception ;
 - `newer_than:2d` : reçus depuis moins de deux jours, lus ou non ;
-- `-label:Agent-traité` : pas encore traités par le workflow ;
+- `-label:agent-traite` : pas encore traités par le workflow ;
 - `-subject:"Récap du jour"` : on exclut le récapitulatif lui-même.
 
-Le nœud récupère au maximum 50 mails par exécution (limite par défaut du nœud Gmail). Le libellé `Agent-traité` garantit qu'un mail n'est traité qu'une seule fois.
+Le nœud récupère au maximum 50 mails par exécution (limite par défaut du nœud Gmail). Le libellé `Agent-Traite` garantit qu'un mail n'est traité qu'une seule fois.
 
 ![Récupération des mails](1-Workflow/captures/02-recuperation-mails.png)
 
@@ -42,7 +42,7 @@ Les instructions, les catégories et les exemples donnés à l'IA sont en franç
 
 ![Classification par Gemini](1-Workflow/captures/03-classification.png)
 
-**Étape 4 : application des libellés.** Chaque sortie du classifieur mène à un nœud Gmail « Libellé … » (Cours, Admin, Vie étudiante, Newsletters, À vérifier). Ce nœud ajoute deux libellés au mail : sa catégorie et le libellé technique `Agent-traité`.
+**Étape 4 : application des libellés.** Chaque sortie du classifieur mène à un nœud Gmail « Libellé … » (Cours, Admin, Vie étudiante, Newsletters, À vérifier). Ce nœud ajoute deux libellés au mail : sa catégorie et le libellé technique `Agent-Traite`.
 
 ![Application des libellés](1-Workflow/captures/04-libelles.png)
 
@@ -76,7 +76,7 @@ test manuel ───────┘                              │
 ## 3. Choix de conception
 
 - **Un seul libellé de catégorie par mail.** La boîte reste lisible : on sait où chercher.
-- **Un libellé technique `Agent-traité`.** C'est lui qui empêche de traiter un mail deux fois : il sert de filtre à chaque exécution.
+- **Un libellé technique `Agent-Traite`.** C'est lui qui empêche de traiter un mail deux fois : il sert de filtre à chaque exécution.
 - **Une fenêtre de deux jours.** Le workflow tourne chaque jour : deux jours laissent une marge si une exécution échoue, sans reprendre des mails trop anciens.
 - **Une sortie « À vérifier ».** Plutôt que de forcer le classement, l'IA range dans ce libellé les mails qu'elle ne sait pas catégoriser. Je les relis moi-même.
 - **Des noms en français.** Les nœuds, les catégories et les libellés sont en français, comme les mails. Les libellés Gmail sont directement lisibles.
@@ -84,7 +84,7 @@ test manuel ───────┘                              │
 
 ## 4. Installation
 
-1. Dans Gmail, crée les libellés `Agent-traité`, `Cours & devoirs`, `Administration`, `Vie étudiante`, `Newsletters & pubs` et `À vérifier`.
+1. Dans Gmail, crée les libellés `Agent-Traite`, `Cours & devoirs`, `Administration`, `Vie étudiante`, `Newsletters & pubs` et `À vérifier`.
 2. Le workflow est fourni au format TypeScript (`Workflow d'automatisation de traitement de mails.workflow.ts`, dans `1-Workflow/`). Il se déploie dans n8n avec l'outil `n8ncli` (`n8ncli push`).
 3. Configure les identifiants :
    - **Gmail OAuth2** : connecte ton compte Google. Les comptes d'école bloquent parfois les applications externes ; vérifie que l'accès est autorisé.
