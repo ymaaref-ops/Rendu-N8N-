@@ -4,6 +4,13 @@ Ce workflow n8n trie chaque matin à 8 h les mails récents de ma boîte Gmail �
 
 Le workflow s'appelle « Workflow d'automatisation de traitement de mails » dans n8n. Les captures d'écran sont dans `1-Workflow/captures/`.
 
+## 🎬 Vidéo de présentation
+
+- **Vidéo (12 min 56) :** [3-Video/video-presentation-workflow.mp4](3-Video/video-presentation-workflow.mp4)
+- **Transcript :** [3-Video/transcript.md](3-Video/transcript.md)
+
+La vidéo présente le workflow étape par étape dans n8n, puis trois commandes `n8ncli` dans le terminal : `pull`, `validate` et `status`.
+
 ## 1. Objectif
 
 Gagner du temps sur une boîte école qui reçoit des mails très différents : cours, administration, vie étudiante, publicités. Le workflow range chaque mail dans la bonne catégorie, pour que je retrouve l'essentiel en un coup d'œil.
